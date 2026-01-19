@@ -11,7 +11,7 @@ const Login = () => {
   <div className="w-full max-w-2xl bg-slate-900 rounded-2xl p-7 shadow-lg">
 
         <h1 className="text-3xl font-extrabold text-center text-primary mb-1">
-          🎥 MovieBook
+          🎥 MovieDekho
         </h1>
         <p className="text-center text-gray-400 text-sm mb-5">
           Login to your account
