@@ -5,7 +5,7 @@ import { Link,Outlet } from "react-router-dom"
 const Home = () => {
   return (
     <div>
-      <h1 className='text-9xl text-orange-600'>This is my Home Page</h1>
+      <h1 className='text-8xl text-orange-600'>I love you</h1>
 
     <Outlet />
 
