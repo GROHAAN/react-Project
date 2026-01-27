@@ -12,7 +12,7 @@ const App = () => {
   return (
     <>
 
-    hello world
+
       <Routes>  
         <Route path='/' element={<Home />} />
 
