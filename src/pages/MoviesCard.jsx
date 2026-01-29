@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import MovieDetails from "../pages/MoviesDetails";
+import SeatBooking from "../pages/SeatBooking";
 
 const MoviesCard = () => {
 
@@ -95,7 +96,7 @@ const MoviesCard = () => {
 
                                 <div className="flex justify-between items-center mt-3">
                                     <span className="text-yellow-400">{movie.rating}</span>
-                                    <button onClick={() => {
+                                    <button className="px-4 py-1.5 bg-red-600 rounded-lg hover:bg-red-700" onClick={() => {
                                         setSelectedMovie(movie);
                                         setPage("details");
                                     }}>
@@ -120,58 +121,22 @@ const MoviesCard = () => {
             {/* Movie Details Modal */}
             <MovieDetails
                 movie={selectedMovie}
-                Close={() => setSelectedMovie(null)}
+                close={() => setPage("movies")}
+                goToSeat={() => setPage("seats")}
             />
 
 
-            {/* MOVIES LIST PAGE */}
-            {page === "movies" && (
-                <section className="px-6 pb-16 min-h-screen bg-black text-white">
-                    <h3 className="text-2xl font-bold mb-6">🔥 Now Showing</h3>
+            
 
-                    <div className="grid grid-cols-5 gap-6">
-                        {movies.map((movie, index) => (
-                            <div key={index} className="bg-slate-900 rounded-xl p-3">
-                                <img src={movie.img} alt={movie.title} />
 
-                                <h4 className="mt-2">{movie.title}</h4>
 
-                                <button
-                                    onClick={() => {
-                                        setSelectedMovie(movie);
-                                        setPage("details");
-                                    }}
-                                    className="mt-2 bg-red-600 px-3 py-1 rounded"
-                                >
-                                    Book Now
-                                </button>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-            )}
 
-            {/* MOVIE DETAILS PAGE */}
-            {page === "details" && (
-                <MovieDetails
-                    movie={selectedMovie}
-                    close={() => setPage("movies")}
-                    goToSeat={() => setPage("seats")}
-                />
-            )}
 
-            {/* SEAT BOOKING PAGE */}
-            {page === "seats" && (
-                <SeatBooking
-                    movie={selectedMovie}
-                    goBack={() => setPage("details")}
-                />
-            )}
 
 
         </>
     );
 };
 
-export default MoviesCard
+export default MoviesCard;
 

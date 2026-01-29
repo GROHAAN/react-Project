@@ -10,13 +10,9 @@ const Home = () => {
   return (
     <div>
 
-      <Navbar/>
 
       <MovieDekho/>
       <MoviesCard/>
-      <Footer/>
-
-    <Outlet />
 
 
     

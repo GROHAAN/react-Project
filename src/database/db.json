@@ -1,64 +1,28 @@
 {
-  "movies": [
+  "BookingData": [
     {
-      "title": "Jawan",
-      "genre": "Action • Thriller",
-      "rating": "⭐ 8.2",
-      "img": "https://tse3.mm.bing.net/th/id/OIP.3m5hebQ5hjmc3A2lAV2jdQHaJQ?rs=1&pid=ImgDetMain&o=7&rm=3"
+      "id": "e4a4",
+      "movieTitle": "Animal",
+      "seats": [
+        23,
+        24
+      ],
+      "seatCount": 2,
+      "totalPrice": 700,
+      "bookingDate": "2026-01-29T10:33:25.780Z"
     },
     {
-      "title": "Animal",
-      "genre": "Crime • Drama",
-      "rating": "⭐ 8.5",
-      "img": "https://i.imgur.com/vx1Zz9Y.jpg"
-    },
-    {
-      "title": "Leo",
-      "genre": "Action • Drama",
-      "rating": "⭐ 8.0",
-      "img": "https://i.imgur.com/W8X9ZJp.jpg"
-    },
-    {
-      "title": "Pathaan",
-      "genre": "Action • Spy",
-      "rating": "⭐ 7.9",
-      "img": "https://i.imgur.com/3Q9Z1Zm.jpg"
-    },
-    {
-      "title": "KGF Chapter 2",
-      "genre": "Action • Crime",
-      "rating": "⭐ 8.4",
-      "img": "https://i.imgur.com/4Q9Z1Zm.jpg"
-    },
-    {
-      "title": "RRR",
-      "genre": "Action • Drama",
-      "rating": "⭐ 8.6",
-      "img": "https://i.imgur.com/5Q9Z1Zm.jpg"
-    },
-    {
-      "title": "Pushpa: The Rise",
-      "genre": "Action • Crime",
-      "rating": "⭐ 8.1",
-      "img": "https://i.imgur.com/6Q9Z1Zm.jpg"
-    },
-    {
-      "title": "Vikram",
-      "genre": "Action • Thriller",
-      "rating": "⭐ 8.3",
-      "img": "https://i.imgur.com/7Q9Z1Zm.jpg"
-    },
-    {
-      "title": "Drishyam 2",
-      "genre": "Crime • Thriller",
-      "rating": "⭐ 8.5",
-      "img": "https://i.imgur.com/8Q9Z1Zm.jpg"
-    },
-    {
-      "title": "Gadar 2",
-      "genre": "Action • Drama",
-      "rating": "⭐ 7.8",
-      "img": "https://i.imgur.com/9Q9Z1Zm.jpg"
+      "id": "2b3e",
+      "movieTitle": "Drishyam 2",
+      "seats": [
+        17,
+        18,
+        19,
+        20
+      ],
+      "seatCount": 4,
+      "totalPrice": 1400,
+      "bookingDate": "2026-01-29T10:33:58.086Z"
     }
   ]
 }
