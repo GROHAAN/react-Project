@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import MovieDetails from "../pages/MoviesDetails";
-import SeatBooking from "../pages/SeatBooking";
+
 
 const MoviesCard = () => {
 
