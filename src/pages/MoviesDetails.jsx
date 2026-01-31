@@ -1,6 +1,16 @@
-import { Link } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 
 const MovieDetails = ({ movie, close }) => {
+const navigate = useNavigate();
+  const handleBooking = () => {
+    const isLoggedIn = localStorage.getItem("useremail"); // ya user
+
+    if (isLoggedIn) {
+      navigate("/seat", { state: { movie } });
+    } else {
+      navigate("/login");
+    }
+  };
   if (!movie) return null;
 
   return (
@@ -28,13 +38,12 @@ const MovieDetails = ({ movie, close }) => {
           {movie.description}
         </p>
 
-        <Link
-          to="/seat"
-          state={{ movie }}
-          className="block mt-5 w-full bg-red-600 py-2 rounded text-center"
+        <button
+          onClick={handleBooking}
+          className="mt-5 w-full bg-red-600 py-2 rounded text-center"
         >
           Proceed to Booking
-        </Link>
+        </button>
 
       </div>
     </div>

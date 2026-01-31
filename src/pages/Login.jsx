@@ -22,6 +22,7 @@ const Login = () => {
     if(authenticatedUser){
       localStorage.setItem("isLoggedIn", "true")
       localStorage.setItem("currentUser", JSON.stringify(authenticatedUser))
+      localStorage.setItem("useremail",authenticatedUser.email)
 
       navigate("/Home")
 

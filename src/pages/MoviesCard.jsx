@@ -68,75 +68,52 @@ const MoviesCard = () => {
         }
     ]
 
-    const [page, setPage] = useState("movies");
     const [selectedMovie, setSelectedMovie] = useState(null);
 
+  return (
+    <>
+      {/* Movies Section */}
+      <section className="px-6 pb-16 min-h-screen bg-gradient-to-br from-black via-slate-900 to-black text-white">
+        <h3 className="text-2xl font-bold mb-6">🔥 Now Showing</h3>
 
-    return (
-        <>
-            {/* Movies Section */}
-            <section className="px-6 pb-16 min-h-screen bg-gradient-to-br from-black via-slate-900 to-black text-white">
-                <h3 className="text-2xl font-bold mb-6">🔥 Now Showing</h3>
+        <div className="grid grid-cols-5 gap-6">
+          {movies.map((movie, index) => (
+            <div
+              key={index}
+              className="bg-slate-900 rounded-xl overflow-hidden shadow-lg hover:scale-105 transition duration-300"
+            >
+              <img
+                src={movie.img}
+                alt={movie.title}
+                className="h-56 w-full object-cover"
+              />
 
-                <div className="grid grid-cols-5 gap-6">
-                    {movies.map((movie, index) => (
-                        <div
-                            key={index}
-                            className="bg-slate-900 rounded-xl overflow-hidden shadow-lg hover:scale-105 transition duration-300"
-                        >
-                            <img
-                                src={movie.img}
-                                alt={movie.title}
-                                className="h-56 w-full object-cover"
-                            />
+              <div className="p-4">
+                <h4 className="text-xl font-bold">{movie.title}</h4>
+                <p className="text-gray-400 text-sm">{movie.genre}</p>
 
-                            <div className="p-4">
-                                <h4 className="text-xl font-bold">{movie.title}</h4>
-                                <p className="text-gray-400 text-sm">{movie.genre}</p>
-
-                                <div className="flex justify-between items-center mt-3">
-                                    <span className="text-yellow-400">{movie.rating}</span>
-                                    <button className="px-4 py-1.5 bg-red-600 rounded-lg hover:bg-red-700" onClick={() => {
-                                        setSelectedMovie(movie);
-                                        setPage("details");
-                                    }}>
-                                        Book Now
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+                <div className="flex justify-between items-center mt-3">
+                  <span className="text-yellow-400">{movie.rating}</span>
+                  <button
+                    className="px-4 py-1.5 bg-red-600 rounded-lg hover:bg-red-700"
+                    onClick={() => setSelectedMovie(movie)}
+                  >
+                    Book Now
+                  </button>
                 </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
-                {/* Banner Section */}
-                <div className="mt-12">
-                    <img
-                        src="https://assets-in.bmscdn.com/discovery-catalog/collections/tr:w-1440,h-120/stream-leadin-web-collection-202210241242.png"
-                        alt="banner"
-                        className="w-full h-auto rounded-xl"
-                    />
-                </div>
-            </section>
-
-            {/* Movie Details Modal */}
-            <MovieDetails
-                movie={selectedMovie}
-                close={() => setPage("movies")}
-                goToSeat={() => setPage("seats")}
-            />
-
-
-            
-
-
-
-
-
-
-
-        </>
-    );
+      {/* Movie Details Modal */}
+      <MovieDetails
+        movie={selectedMovie}
+        close={() => setSelectedMovie(null)}
+      />
+    </>
+  );
 };
 
 export default MoviesCard;
-
