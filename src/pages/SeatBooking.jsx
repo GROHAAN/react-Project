@@ -23,13 +23,24 @@ const SeatBooking = () => {
   const totalPrice = selectedSeats.length * SEAT_PRICE;
 
   const handleConfirmBooking = () => {
+    const userEmail = localStorage.getItem("useremail");
+
+    if (!userEmail) {
+      alert("Please login to book seats");
+      navigate("/login");
+      return;
+    }
+
     const bookingPayload = {
       movieId: movie.id,
       movieTitle: movie.title,
       seats: selectedSeats,
       seatCount: selectedSeats.length,
       totalPrice: totalPrice,
-      bookingDate: new Date().toISOString()
+      bookingDate: new Date().toISOString(),
+
+      // 🔥 IMPORTANT LINE
+      userEmail: userEmail,
     };
 
     axios
@@ -37,7 +48,7 @@ const SeatBooking = () => {
       .then((response) => {
         console.log("Booking Saved:", response.data);
         alert("🎉 Booking Confirmed!");
-        navigate("/");
+        navigate("/showbook");
       })
       .catch((error) => {
         console.error("Booking Error:", error);
