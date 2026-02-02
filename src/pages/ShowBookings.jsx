@@ -17,12 +17,12 @@ const ShowBookings = () => {
     }
   }, []);
 
-  const fetchBookings = async () => {
-    setLoading(true);
+  const fetchBookings = () => {
+  setLoading(true);
 
-    try {
-      const res = await axios.get("http://localhost:3000/BookingData");
-
+  axios
+    .get("http://localhost:3000/BookingData")
+    .then((res) => {
       const userEmail = localStorage.getItem("useremail");
 
       // 🔥 FILTER BOOKINGS BY LOGGED IN USER
@@ -31,21 +31,21 @@ const ShowBookings = () => {
       );
 
       setBookings(userBookings);
-    } catch {
+    })
+    .catch(() => {
       alert("Failed to load bookings");
-    } finally {
-      setLoading(false);
-    }
-  };
+    })
+    
+};
 
-<<<<<<< HEAD
   const handleDelete = (id) => {
- 
+    
+
     axios
       .delete(`http://localhost:3000/BookingData/${id}`)
       .then(() => {
-        alert("Booking cancelled successfully")
         setBookings((prev) => prev.filter((booking) => booking.id !== id));
+        alert("Booking cancelled successfully")
       })
       .catch((error) => {
         console.error("Error deleting booking:", error);
@@ -53,10 +53,6 @@ const ShowBookings = () => {
       });
   };
 
-
-  
-
-=======
   // 🔒 LOGGED OUT VIEW
   if (!isLoggedIn) {
     return (
@@ -76,7 +72,6 @@ const ShowBookings = () => {
   }
 
   // ⏳ LOADING
->>>>>>> efe72f7e9169f1d103b7f5fb023137ba689019ce
   if (loading) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
@@ -124,7 +119,9 @@ const ShowBookings = () => {
                     {new Date(booking.bookingDate).toLocaleString()}
                   </td>
                   <td className="p-3 border">
-                    <button className="bg-red-600 px-3 py-1 rounded">
+                    <button onClick={()=>{
+                      handleDelete(booking.id)
+                    }} className="bg-red-600 px-3 py-1 rounded">
                       Cancel
                     </button>
                   </td>

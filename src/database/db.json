@@ -1,93 +1,16 @@
 {
-<<<<<<< HEAD
-  "BookingData": []
-=======
   "BookingData": [
     {
-      "id": "3cf9",
-      "movieTitle": "KGF Chapter 2",
-      "seats": [
-        21,
-        22
-      ],
-      "seatCount": 2,
-      "totalPrice": 700,
-      "bookingDate": "2026-01-31T09:52:34.417Z"
-    },
-    {
-      "id": "74ac",
-      "movieTitle": "Leo",
-      "seats": [
-        5,
-        6
-      ],
-      "seatCount": 2,
-      "totalPrice": 700,
-      "bookingDate": "2026-01-31T09:54:02.304Z"
-    },
-    {
-      "id": "d51e",
+      "id": "1bfe",
       "movieTitle": "Drishyam 2",
       "seats": [
-        22,
-        23,
-        24
-      ],
-      "seatCount": 3,
-      "totalPrice": 1050,
-      "bookingDate": "2026-01-31T09:54:28.856Z"
-    },
-    {
-      "id": "a61f",
-      "movieTitle": "Drishyam 2",
-      "seats": [
-        21,
-        20
-      ],
-      "seatCount": 2,
-      "totalPrice": 700,
-      "bookingDate": "2026-01-31T09:56:31.601Z",
-      "userEmail": "hari@gmail.com"
-    },
-    {
-      "id": "d0f9",
-      "movieTitle": "Drishyam 2",
-      "seats": [
-        1,
-        2,
-        3
-      ],
-      "seatCount": 3,
-      "totalPrice": 1050,
-      "bookingDate": "2026-01-31T09:57:56.126Z",
-      "userEmail": "hari@gmail.com"
-    },
-    {
-      "id": "4fc8",
-      "movieTitle": "Gadar 2",
-      "seats": [
-        1,
-        9,
-        17,
-        18,
-        10,
-        2,
-        11,
         12,
-        13,
-        14,
-        15,
-        7,
-        8,
-        16,
-        24,
-        23
+        13
       ],
-      "seatCount": 16,
-      "totalPrice": 5600,
-      "bookingDate": "2026-01-31T11:25:31.230Z",
-      "userEmail": "gj@gmail.com"
+      "seatCount": 2,
+      "totalPrice": 700,
+      "bookingDate": "2026-02-02T09:11:00.470Z",
+      "userEmail": "rohaan@gmail.com"
     }
   ]
->>>>>>> efe72f7e9169f1d103b7f5fb023137ba689019ce
 }
