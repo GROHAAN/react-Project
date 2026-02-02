@@ -1,16 +1,26 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 const SeatBooking = () => {
   const navigate = useNavigate();
-  const { state } = useLocation();
-  const movie = state?.movie;
+
+  const [movie, setMovie] = useState(null);
+  const [selectedSeats, setSelectedSeats] = useState([]);
 
   const SEAT_PRICE = 350;
   const seats = Array.from({ length: 24 }, (_, i) => i + 1);
 
-  const [selectedSeats, setSelectedSeats] = useState([]);
+  // ✅ GET MOVIE SAFELY (NO useLocation)
+  useEffect(() => {
+    const storedMovie = localStorage.getItem("selectedMovie");
+
+    if (storedMovie) {
+      setMovie(JSON.parse(storedMovie));
+    } else {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const toggleSeat = (seat) => {
     setSelectedSeats((prev) =>
@@ -31,32 +41,34 @@ const SeatBooking = () => {
       return;
     }
 
+    if (selectedSeats.length === 0) {
+      alert("Please select at least one seat");
+      return;
+    }
+
     const bookingPayload = {
       movieId: movie.id,
       movieTitle: movie.title,
       seats: selectedSeats,
       seatCount: selectedSeats.length,
-      totalPrice: totalPrice,
+      totalPrice,
       bookingDate: new Date().toISOString(),
-
-      // 🔥 IMPORTANT LINE
-      userEmail: userEmail,
+      userEmail,
     };
 
     axios
       .post("http://localhost:3000/BookingData", bookingPayload)
-      .then((response) => {
-        console.log("Booking Saved:", response.data);
+      .then(() => {
         alert("🎉 Booking Confirmed!");
+        localStorage.removeItem("selectedMovie");
         navigate("/showbook");
       })
-      .catch((error) => {
-        console.error("Booking Error:", error);
-        console.log(bookingPayload)
+      .catch(() => {
         alert("❌ Booking failed");
       });
   };
 
+  // 🛑 SAFETY
   if (!movie) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
@@ -68,7 +80,7 @@ const SeatBooking = () => {
   return (
     <div className="min-h-screen bg-black text-white p-6">
 
-      {/* Movie Details */}
+      {/* Movie Info */}
       <div className="flex justify-center gap-4 mb-8 items-center">
         <img
           src={movie.img}
