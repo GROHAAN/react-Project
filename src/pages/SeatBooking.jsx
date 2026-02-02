@@ -47,7 +47,7 @@ const SeatBooking = () => {
     }
 
     const bookingPayload = {
-      movieId: movie.id,
+      id: movie.id,
       movieTitle: movie.title,
       seats: selectedSeats,
       seatCount: selectedSeats.length,
