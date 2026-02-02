@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 const ShowBookings = () => {
   const [bookings, setBookings] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
@@ -18,42 +17,42 @@ const ShowBookings = () => {
   }, []);
 
   const fetchBookings = () => {
-  setLoading(true);
+    axios
+      .get("http://localhost:3000/BookingData")
+      .then((res) => {
+        const userEmail = localStorage.getItem("useremail");
 
-  axios
-    .get("http://localhost:3000/BookingData")
-    .then((res) => {
-      const userEmail = localStorage.getItem("useremail");
+        if (!userEmail) {
+          setBookings([]);
+          return;
+        }
 
-      // 🔥 FILTER BOOKINGS BY LOGGED IN USER
-      const userBookings = res.data.filter(
-        (booking) => booking.userEmail === userEmail
-      );
+        const userBookings = res.data.filter(
+          (booking) => booking.userEmail === userEmail
+        );
 
-      setBookings(userBookings);
-    })
-    .catch(() => {
-      alert("Failed to load bookings");
-    })
-    
-};
+        setBookings(userBookings);
+      })
+      .catch(() => {
+        alert("Failed to load bookings");
+      });
+  };
 
   const handleDelete = (id) => {
-    
-
     axios
       .delete(`http://localhost:3000/BookingData/${id}`)
       .then(() => {
-        setBookings((prev) => prev.filter((booking) => booking.id !== id));
-        alert("Booking cancelled successfully")
+        setBookings((prev) =>
+          prev.filter((booking) => booking.id !== id)
+        );
+        alert("Booking cancelled successfully");
       })
-      .catch((error) => {
-        console.error("Error deleting booking:", error);
+      .catch(() => {
         alert("Failed to cancel booking. Try again.");
       });
   };
 
-  // 🔒 LOGGED OUT VIEW
+  // 🔒 NOT LOGGED IN VIEW
   if (!isLoggedIn) {
     return (
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center gap-4">
@@ -67,15 +66,6 @@ const ShowBookings = () => {
         >
           Go to Login
         </button>
-      </div>
-    );
-  }
-
-  // ⏳ LOADING
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        Loading bookings... ⏳
       </div>
     );
   }
@@ -119,9 +109,10 @@ const ShowBookings = () => {
                     {new Date(booking.bookingDate).toLocaleString()}
                   </td>
                   <td className="p-3 border">
-                    <button onClick={()=>{
-                      handleDelete(booking.id)
-                    }} className="bg-red-600 px-3 py-1 rounded">
+                    <button
+                      onClick={() => handleDelete(booking.id)}
+                      className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded"
+                    >
                       Cancel
                     </button>
                   </td>

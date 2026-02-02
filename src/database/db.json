@@ -11,6 +11,17 @@
       "totalPrice": 700,
       "bookingDate": "2026-02-02T09:11:00.470Z",
       "userEmail": "rohaan@gmail.com"
+    },
+    {
+      "id": "41f1",
+      "movieTitle": "Pushpa: The Rise",
+      "seats": [
+        21
+      ],
+      "seatCount": 1,
+      "totalPrice": 350,
+      "bookingDate": "2026-02-02T09:22:57.315Z",
+      "userEmail": "abhui@gmail.com"
     }
   ]
 }
