@@ -26,11 +26,11 @@ const ShowBookings = () => {
   };
 
   const handleDelete = (id) => {
-    if (!window.confirm("Are you sure you want to cancel this booking?")) return;
-
+ 
     axios
       .delete(`http://localhost:3000/BookingData/${id}`)
       .then(() => {
+        alert("Booking cancelled successfully")
         setBookings((prev) => prev.filter((booking) => booking.id !== id));
       })
       .catch((error) => {
@@ -38,6 +38,9 @@ const ShowBookings = () => {
         alert("Failed to cancel booking. Try again.");
       });
   };
+
+
+  
 
   if (loading) {
     return (

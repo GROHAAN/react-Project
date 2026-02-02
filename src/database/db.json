@@ -1,28 +1,3 @@
 {
-  "BookingData": [
-    {
-      "id": "e4a4",
-      "movieTitle": "Animal",
-      "seats": [
-        23,
-        24
-      ],
-      "seatCount": 2,
-      "totalPrice": 700,
-      "bookingDate": "2026-01-29T10:33:25.780Z"
-    },
-    {
-      "id": "2b3e",
-      "movieTitle": "Drishyam 2",
-      "seats": [
-        17,
-        18,
-        19,
-        20
-      ],
-      "seatCount": 4,
-      "totalPrice": 1400,
-      "bookingDate": "2026-01-29T10:33:58.086Z"
-    }
-  ]
+  "BookingData": []
 }
