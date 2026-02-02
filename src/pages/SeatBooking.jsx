@@ -52,6 +52,7 @@ const SeatBooking = () => {
       })
       .catch((error) => {
         console.error("Booking Error:", error);
+        console.log(bookingPayload)
         alert("❌ Booking failed");
       });
   };
