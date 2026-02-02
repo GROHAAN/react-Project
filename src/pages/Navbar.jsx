@@ -9,8 +9,9 @@ const Navbar = () => {
   const user = JSON.parse(localStorage.getItem("currentUser"));
 
   const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("currentUser");
+  localStorage.removeItem("isLoggedIn");
+  localStorage.removeItem("currentUser");
+  localStorage.removeItem("useremail");
     navigate("/login");
   };
 

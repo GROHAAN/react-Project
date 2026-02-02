@@ -4,41 +4,59 @@ import { useNavigate } from "react-router-dom";
 
 const ShowBookings = () => {
   const [bookings, setBookings] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchBookings();
+    const loggedIn = localStorage.getItem("isLoggedIn") === "true";
+    setIsLoggedIn(loggedIn);
+
+    if (loggedIn) {
+      fetchBookings();
+    }
   }, []);
 
-  const fetchBookings = () => {
+  const fetchBookings = async () => {
     setLoading(true);
-    axios
-      .get("http://localhost:3000/BookingData")
-      .then((response) => {
-        setBookings(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching bookings:", error);
-        setLoading(false);
-      });
+
+    try {
+      const res = await axios.get("http://localhost:3000/BookingData");
+
+      const userEmail = localStorage.getItem("useremail");
+
+      // 🔥 FILTER BOOKINGS BY LOGGED IN USER
+      const userBookings = res.data.filter(
+        (booking) => booking.userEmail === userEmail
+      );
+
+      setBookings(userBookings);
+    } catch {
+      alert("Failed to load bookings");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleDelete = (id) => {
-    if (!window.confirm("Are you sure you want to cancel this booking?")) return;
+  // 🔒 LOGGED OUT VIEW
+  if (!isLoggedIn) {
+    return (
+      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center gap-4">
+        <h2 className="text-2xl font-bold">🔒 Login Required</h2>
+        <p className="text-gray-400">
+          Please login to view your bookings
+        </p>
+        <button
+          onClick={() => navigate("/login")}
+          className="bg-red-600 hover:bg-red-700 px-6 py-2 rounded-lg font-semibold"
+        >
+          Go to Login
+        </button>
+      </div>
+    );
+  }
 
-    axios
-      .delete(`http://localhost:3000/BookingData/${id}`)
-      .then(() => {
-        setBookings((prev) => prev.filter((booking) => booking.id !== id));
-      })
-      .catch((error) => {
-        console.error("Error deleting booking:", error);
-        alert("Failed to cancel booking. Try again.");
-      });
-  };
-
+  // ⏳ LOADING
   if (loading) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
@@ -47,6 +65,7 @@ const ShowBookings = () => {
     );
   }
 
+  // ✅ LOGGED IN VIEW
   return (
     <div className="min-h-screen bg-black text-white p-4">
       <h1 className="text-3xl font-bold text-center mb-8">
@@ -54,46 +73,38 @@ const ShowBookings = () => {
       </h1>
 
       {bookings.length === 0 ? (
-        <p className="text-center text-gray-400">No bookings found 😢</p>
+        <p className="text-center text-gray-400">
+          You have no bookings yet 😢
+        </p>
       ) : (
         <div className="overflow-x-auto max-w-6xl mx-auto">
-          <table className="w-full border border-gray-700 rounded-lg overflow-hidden">
+          <table className="w-full border border-gray-700">
             <thead className="bg-gray-800 text-yellow-400">
               <tr>
-                <th className="p-3 border border-gray-700">Movie</th>
-                <th className="p-3 border border-gray-700">Seats</th>
-                <th className="p-3 border border-gray-700">Total Seats</th>
-                <th className="p-3 border border-gray-700">Price (₹)</th>
-                <th className="p-3 border border-gray-700">Booked On</th>
-                <th className="p-3 border border-gray-700">Action</th>
+                <th className="p-3 border">Movie</th>
+                <th className="p-3 border">Seats</th>
+                <th className="p-3 border">Total Seats</th>
+                <th className="p-3 border">Price (₹)</th>
+                <th className="p-3 border">Booked On</th>
+                <th className="p-3 border">Action</th>
               </tr>
             </thead>
-
             <tbody>
               {bookings.map((booking) => (
-                <tr
-                  key={booking.id}
-                  className="bg-gray-900 hover:bg-gray-800 text-center"
-                >
-                  <td className="p-3 border border-gray-700 font-semibold">
-                    {booking.movieTitle}
-                  </td>
-                  
-                  <td className="p-3 border border-gray-700">
+                <tr key={booking.id} className="bg-gray-900 text-center">
+                  <td className="p-3 border">{booking.movieTitle}</td>
+                  <td className="p-3 border">
                     {booking.seats.join(", ")}
                   </td>
-                  <td className="p-3 border border-gray-700">{booking.seatCount}</td>
-                  <td className="p-3 border border-gray-700 text-green-400 font-bold">
+                  <td className="p-3 border">{booking.seatCount}</td>
+                  <td className="p-3 border text-green-400">
                     ₹{booking.totalPrice}
                   </td>
-                  <td className="p-3 border border-gray-700 text-sm text-gray-400">
+                  <td className="p-3 border text-gray-400">
                     {new Date(booking.bookingDate).toLocaleString()}
                   </td>
-                  <td className="p-3 border border-gray-700">
-                    <button
-                      onClick={() => handleDelete(booking.id)}
-                      className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
-                    >
+                  <td className="p-3 border">
+                    <button className="bg-red-600 px-3 py-1 rounded">
                       Cancel
                     </button>
                   </td>
@@ -103,13 +114,6 @@ const ShowBookings = () => {
           </table>
         </div>
       )}
-
-      <button
-        onClick={() => navigate("/")}
-        className="block mx-auto mt-8 text-gray-400 hover:text-white"
-      >
-        ← Back to Home
-      </button>
     </div>
   );
 };
