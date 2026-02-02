@@ -1,43 +1,16 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import axios from "axios";
 
 const SeatBooking = () => {
   const navigate = useNavigate();
-
-  const [movie, setMovie] = useState(null);
-  const [selectedSeats, setSelectedSeats] = useState([]);
+  const { state } = useLocation();
+  const movie = state?.movie;
 
   const SEAT_PRICE = 350;
   const seats = Array.from({ length: 24 }, (_, i) => i + 1);
 
-  // ✅ SAFE MOVIE LOAD
-  useEffect(() => {
-    try {
-      const storedMovie = localStorage.getItem("selectedMovie");
-
-      if (!storedMovie) {
-        navigate("/");
-        return;
-      }
-
-      const parsedMovie = JSON.parse(storedMovie);
-
-      // 🔥 MAIN FIX: id validation
-      if (!parsedMovie.id) {
-        console.error("Movie ID missing:", parsedMovie);
-        alert("Movie data corrupted. Please select movie again.");
-        localStorage.removeItem("selectedMovie");
-        navigate("/");
-        return;
-      }
-
-      setMovie(parsedMovie);
-    } catch (err) {
-      console.error("Invalid movie data", err);
-      navigate("/");
-    }
-  }, [navigate]);
+  const [selectedSeats, setSelectedSeats] = useState([]);
 
   const toggleSeat = (seat) => {
     setSelectedSeats((prev) =>
@@ -58,29 +31,27 @@ const SeatBooking = () => {
       return;
     }
 
-    if (selectedSeats.length === 0) {
-      alert("Please select at least one seat");
-      return;
-    }
-
     const bookingPayload = {
-      movieId: movie.id, // ✅ NOW GUARANTEED
+      movieId: movie.id,
       movieTitle: movie.title,
       seats: selectedSeats,
       seatCount: selectedSeats.length,
-      totalPrice,
+      totalPrice: totalPrice,
       bookingDate: new Date().toISOString(),
-      userEmail,
+
+      // 🔥 IMPORTANT LINE
+      userEmail: userEmail,
     };
 
     axios
       .post("http://localhost:3000/BookingData", bookingPayload)
-      .then(() => {
+      .then((response) => {
+        console.log("Booking Saved:", response.data);
         alert("🎉 Booking Confirmed!");
-        localStorage.removeItem("selectedMovie");
         navigate("/showbook");
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error("Booking Error:", error);
         alert("❌ Booking failed");
       });
   };
@@ -88,7 +59,7 @@ const SeatBooking = () => {
   if (!movie) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        Loading movie...
+        No movie selected 😢
       </div>
     );
   }
@@ -96,7 +67,7 @@ const SeatBooking = () => {
   return (
     <div className="min-h-screen bg-black text-white p-6">
 
-      {/* Movie Info */}
+      {/* Movie Details */}
       <div className="flex justify-center gap-4 mb-8 items-center">
         <img
           src={movie.img}
@@ -116,12 +87,13 @@ const SeatBooking = () => {
           SCREEN
         </div>
 
+        {/* Seats */}
         <div className="grid grid-cols-8 gap-3">
           {seats.map((seat) => (
             <button
               key={seat}
               onClick={() => toggleSeat(seat)}
-              className={`w-10 h-10 rounded text-sm
+              className={`w-10 h-10 rounded text-sm transition
                 ${
                   selectedSeats.includes(seat)
                     ? "bg-red-600"
@@ -139,7 +111,7 @@ const SeatBooking = () => {
         <p className="text-gray-300 text-center">
           Selected Seats:{" "}
           <span className="text-yellow-400">
-            {selectedSeats.length
+            {selectedSeats.length > 0
               ? selectedSeats.join(", ")
               : "None"}
           </span>
@@ -153,7 +125,7 @@ const SeatBooking = () => {
         </p>
 
         <button
-          disabled={!selectedSeats.length}
+          disabled={selectedSeats.length === 0}
           onClick={handleConfirmBooking}
           className="w-full bg-red-600 py-2 rounded disabled:opacity-50"
         >
