@@ -11,13 +11,30 @@ const SeatBooking = () => {
   const SEAT_PRICE = 350;
   const seats = Array.from({ length: 24 }, (_, i) => i + 1);
 
-  // ✅ GET MOVIE SAFELY (NO useLocation)
+  // ✅ SAFE MOVIE LOAD
   useEffect(() => {
-    const storedMovie = localStorage.getItem("selectedMovie");
+    try {
+      const storedMovie = localStorage.getItem("selectedMovie");
 
-    if (storedMovie) {
-      setMovie(JSON.parse(storedMovie));
-    } else {
+      if (!storedMovie) {
+        navigate("/");
+        return;
+      }
+
+      const parsedMovie = JSON.parse(storedMovie);
+
+      // 🔥 MAIN FIX: id validation
+      if (!parsedMovie.id) {
+        console.error("Movie ID missing:", parsedMovie);
+        alert("Movie data corrupted. Please select movie again.");
+        localStorage.removeItem("selectedMovie");
+        navigate("/");
+        return;
+      }
+
+      setMovie(parsedMovie);
+    } catch (err) {
+      console.error("Invalid movie data", err);
       navigate("/");
     }
   }, [navigate]);
@@ -47,7 +64,7 @@ const SeatBooking = () => {
     }
 
     const bookingPayload = {
-      movieId: movie.id,
+      movieId: movie.id, // ✅ NOW GUARANTEED
       movieTitle: movie.title,
       seats: selectedSeats,
       seatCount: selectedSeats.length,
@@ -68,11 +85,10 @@ const SeatBooking = () => {
       });
   };
 
-  // 🛑 SAFETY
   if (!movie) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        No movie selected 😢
+        Loading movie...
       </div>
     );
   }
@@ -100,13 +116,12 @@ const SeatBooking = () => {
           SCREEN
         </div>
 
-        {/* Seats */}
         <div className="grid grid-cols-8 gap-3">
           {seats.map((seat) => (
             <button
               key={seat}
               onClick={() => toggleSeat(seat)}
-              className={`w-10 h-10 rounded text-sm transition
+              className={`w-10 h-10 rounded text-sm
                 ${
                   selectedSeats.includes(seat)
                     ? "bg-red-600"
@@ -124,7 +139,7 @@ const SeatBooking = () => {
         <p className="text-gray-300 text-center">
           Selected Seats:{" "}
           <span className="text-yellow-400">
-            {selectedSeats.length > 0
+            {selectedSeats.length
               ? selectedSeats.join(", ")
               : "None"}
           </span>
@@ -138,7 +153,7 @@ const SeatBooking = () => {
         </p>
 
         <button
-          disabled={selectedSeats.length === 0}
+          disabled={!selectedSeats.length}
           onClick={handleConfirmBooking}
           className="w-full bg-red-600 py-2 rounded disabled:opacity-50"
         >
