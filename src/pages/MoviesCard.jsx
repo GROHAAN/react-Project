@@ -73,7 +73,7 @@ const MoviesCard = () => {
   return (
     <>
       {/* Movies Section */}
-      <section className="px-6 pb-16 min-h-screen bg-gradient-to-br from-black via-slate-900 to-black text-white">
+      <section className="px-6 pb-16 min-h-screen bg-linear-to-br from-black via-slate-900 to-black text-white">
         <h3 className="text-2xl font-bold mb-6">🔥 Now Showing</h3>
 
         <div className="grid grid-cols-5 gap-6">
