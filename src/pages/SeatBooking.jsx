@@ -3,6 +3,9 @@ import { useState } from "react";
 import axios from "axios";
 
 const SeatBooking = () => {
+
+  console.log(movie.id);
+  
   const navigate = useNavigate();
   const { state } = useLocation();
   const movie = state?.movie;
