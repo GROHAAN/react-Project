@@ -46,6 +46,17 @@
       "totalPrice": 700,
       "bookingDate": "2026-02-02T10:11:44.753Z",
       "userEmail": "sajay@gmail.com"
+    },
+    {
+      "id": "2db2",
+      "movieTitle": "Leo",
+      "seats": [
+        13
+      ],
+      "seatCount": 1,
+      "totalPrice": 350,
+      "bookingDate": "2026-02-04T13:00:03.056Z",
+      "userEmail": "sajay@gmail.com"
     }
   ]
 }

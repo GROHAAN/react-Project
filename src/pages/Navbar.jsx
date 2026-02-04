@@ -60,15 +60,15 @@ const Navbar = () => {
               className="flex items-center gap-2 px-4 py-2 bg-red-600/20 rounded-full hover:bg-red-700/10 transition font-semibold shadow-md"
             >
               <div className="w-8 h-8 rounded-full bg-white text-red-600 flex items-center justify-center font-bold">
-                {user?.name?.charAt(0).toUpperCase() || "G"}
+                {user.name.charAt(0).toUpperCase() || "G"}
               </div>
-              <span>{user?.name || "User"}</span>
+              <span>{user.name || "User"}</span>
               <span
-                className={`transition-transform duration-200 ${
-                  dropdownOpen ? "rotate-180" : ""
+                className={`transition-transform duration-500 ${
+                  dropdownOpen ? "rotate-180 scale-150" : ""
                 }`}
               >
-                ▼
+                🏹
               </span>
             </button>
 
