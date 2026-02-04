@@ -4,7 +4,7 @@ import axios from "axios";
 
 const SeatBooking = () => {
 
-  console.log(movie.id);
+
   
   const navigate = useNavigate();
   const { state } = useLocation();
