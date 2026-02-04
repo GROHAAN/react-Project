@@ -52,7 +52,7 @@ const MoviesCard = () => {
             "title": "Vikram",
             "genre": "Action • Thriller",
             "rating": "⭐ 8.3",
-            "img": "https://th.bing.com/th/id/R.22f605b11b1f17510d36e98b54365b6d?rik=g7urYoZtAHl%2bag&riu=http%3a%2f%2fonlookersmedia.in%2fwp-content%2fuploads%2f2022%2f03%2fkamal-haasan-vikram-new-poster2.jpg&ehk=Rgx%2bTEGAxM4YI9F7kF4%2bkvPaH%2bVnatpQu9O5fh7ZQ1E%3d&risl=&pid=ImgRaw&r=0"
+            "img": "https://m.media-amazon.com/images/M/MV5BNDEyMWQ0ZDktNTY0MC00YWRkLWFlMjQtMDUxMjRlMDhmMmRlXkEyXkFqcGc@._V1_.jpg"
         },
         {
             "title": "Drishyam 2",
